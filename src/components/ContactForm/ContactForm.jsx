@@ -2,14 +2,13 @@ import { useState } from 'react';
 import s from './ContactForm.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import {addContact} from 'redux/contacts/contacts-actions';
+import { addContact } from 'redux/contacts/contacts-actions';
 
-
- const ContactForm = () => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -26,7 +25,7 @@ import {addContact} from 'redux/contacts/contacts-actions';
   const handleSubmit = e => {
     e.preventDefault();
 
-    dispatch(addContact({ name, number }))  
+    dispatch(addContact({ name, number }));
     reset();
   };
 
@@ -77,7 +76,6 @@ ContactForm.propTypes = {
       number: PropTypes.number.isRequired,
     }),
   ),
-};  
+};
 
-export default ContactForm
-
+export default ContactForm;

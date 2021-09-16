@@ -1,18 +1,14 @@
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
-import {useSelector, useDispatch } from 'react-redux';
-import {deleteContact} from 'redux/contacts/contacts-actions';
-import {getVisibleContacts} from 'redux/contacts/contacts-selectors';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/contacts/contacts-actions';
+import { getVisibleContacts } from 'redux/contacts/contacts-selectors';
 
+function ContactList() {
+  const contacts = useSelector(getVisibleContacts);
+  const dispatch = useDispatch();
 
-
-
- function ContactList() {  
-
-   const contacts = useSelector(getVisibleContacts);
-   const dispatch = useDispatch();
-
-   const onDeleteContact = id => dispatch(deleteContact(id));
+  const onDeleteContact = id => dispatch(deleteContact(id));
   return (
     <ol className={s.contactList}>
       {contacts?.map(({ name, number, id }) => (
@@ -39,4 +35,4 @@ ContactList.propTypes = {
   ),
 };
 
-export default ContactList
+export default ContactList;
