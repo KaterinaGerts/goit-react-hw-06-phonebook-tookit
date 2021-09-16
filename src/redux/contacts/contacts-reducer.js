@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
-import types from './contacts-types';
+import { createReducer } from '@reduxjs/toolkit';
+import {addContact, deleteContact, changeFilter} from './contacts-actions';
+import {CheckedContactName} from 'utils/CheckedContactName';
 
 const initialState = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -8,40 +10,15 @@ const initialState = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ]
 
-const CheckedContactName = (contacts, newContact) => {
-  const nameNormalize = newContact.name.toLowerCase();
-     const checkedName = contacts.find(
-       contact => nameNormalize === contact.name.toLowerCase(),
-     );
- 
-     if(checkedName) { alert(`${newContact.name} is already in contacts!`)
-     return contacts;
-     } return [...contacts, newContact];
- }
+const item = createReducer(initialState, {
+  [addContact]: (state, {payload}) => CheckedContactName(state, payload),
+  [deleteContact]:(state, {payload}) => state.filter(({id}) => id !== payload),
+})
 
-const item = (state = initialState, {type, payload}) => {
-  switch (type) {
-    case types.ADD:     
-      return CheckedContactName(state, payload);
-      
-      case types.DELETE:
-        return state.filter(({id}) => id !== payload)
-      
-     
-    default:
-      return state;
-  }
-};
 
-const filter = (state = '', {type, payload}) => {
-  switch (type) {
-    case types.CHANGE_FILTER:
-      return payload;     
-  
-    default:
-     return state;
-  }
-}
+const filter = createReducer('', {
+  [changeFilter]: (_, {payload}) => payload,
+})
 
 const contactsReducer = combineReducers({
   item,
